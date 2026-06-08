@@ -24,8 +24,7 @@ public class CustomerService {
 
     @Transactional
     public CustomerResponse createCustomer(CreateCustomerRequest request) {
-        Customer existingCustomer =
-                customerRepository.findByEmail(request.getEmail());
+        Customer existingCustomer = customerRepository.findByEmail(request.getEmail());
 
         if (existingCustomer != null) {
             throw new CustomerAlreadyExistsException("Email already exists");
@@ -50,17 +49,11 @@ public class CustomerService {
         return CustomerMapper.toResponse(customer);
     }
     public List<CustomerResponse> getAllCustomers() {
-
-        return customerRepository.getAllCustomers()
-                .stream()
-                .map(CustomerMapper::toResponse)
-                .toList();
+        return customerRepository.getAllCustomers().stream().map(CustomerMapper::toResponse).toList();
     }
     @Transactional
     public CustomerResponse updateCustomer(Long id, UpdateCustomerRequest request) {
-
-        Customer customer =
-                customerRepository.findCustomerById(id);
+        Customer customer = customerRepository.findCustomerById(id);
 
         if (customer == null) {
             throw new RuntimeException("Customer not found");
@@ -75,10 +68,7 @@ public class CustomerService {
     }
     @Transactional
     public void deleteCustomer(Long id) {
-
-        Customer customer =
-                customerRepository.findCustomerById(id);
-
+        Customer customer = customerRepository.findCustomerById(id);
         if (customer == null) {
             throw new CustomerNotFoundException("Customer not found");
         }

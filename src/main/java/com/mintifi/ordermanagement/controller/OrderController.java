@@ -13,7 +13,7 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.DefaultValue;
-import java.util.List;
+//import java.util.List;
 
 @Path("/api/v1/orders")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -29,21 +29,13 @@ public class OrderController {
             description = "Creates a new order for an existing customer"
     )
     public Response createOrder(@Valid CreateOrderRequest request) {
-
-        OrderResponse response =
-                orderService.createOrder(request);
-
-        return Response.status(Response.Status.CREATED)
-                .entity(response)
-                .build();
+        OrderResponse response = orderService.createOrder(request);
+        return Response.status(Response.Status.CREATED).entity(response).build();
     }
     @GET
     @Path("/{id}")
     public Response getOrderById(@PathParam("id") Long id) {
-
-        return Response.ok(
-                orderService.getOrderById(id)
-        ).build();
+        return Response.ok(orderService.getOrderById(id)).build();
     }
     @GET
     public Response getAllOrders(
@@ -55,9 +47,7 @@ public class OrderController {
             @DefaultValue("10")
             int size) {
 
-        return Response.ok(
-                orderService.getAllOrders(page, size)
-        ).build();
+        return Response.ok(orderService.getAllOrders(page, size)).build();
     }
     @PATCH
     @Path("/{id}/status")
@@ -65,8 +55,6 @@ public class OrderController {
             @PathParam("id") Long id,
             @Valid UpdateOrderStatusRequest request) {
 
-        return Response.ok(
-                orderService.updateOrderStatus(id, request)
-        ).build();
+        return Response.ok(orderService.updateOrderStatus(id, request)).build();
     }
 }

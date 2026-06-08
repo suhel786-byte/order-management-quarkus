@@ -7,15 +7,10 @@ import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 
 @Provider
-public class CustomerNotFoundExceptionMapper
-        implements ExceptionMapper<CustomerNotFoundException> {
+public class CustomerNotFoundExceptionMapper implements ExceptionMapper<CustomerNotFoundException> {
 
     @Override
     public Response toResponse(CustomerNotFoundException exception) {
-
-        return Response.status(Response.Status.NOT_FOUND)
-                .entity(new ErrorResponse(exception.getMessage()))
-                .type(MediaType.APPLICATION_JSON)
-                .build();
+        return Response.status(Response.Status.NOT_FOUND).entity(new ErrorResponse(exception.getMessage())).type(MediaType.APPLICATION_JSON).build();
     }
 }

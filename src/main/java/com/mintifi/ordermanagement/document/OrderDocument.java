@@ -1,26 +1,17 @@
-package com.mintifi.ordermanagement.dto.response;
+package com.mintifi.ordermanagement.document;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class OrderResponse {
+public class OrderDocument {
 
     private Long id;
-    private Long customerId;
     private String orderNumber;
+    private String productName;
     private BigDecimal amount;
     private String status;
+    private String customerName;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private String productName;
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
 
     public Long getId() {
         return id;
@@ -30,20 +21,20 @@ public class OrderResponse {
         this.id = id;
     }
 
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
     public String getOrderNumber() {
         return orderNumber;
     }
 
     public void setOrderNumber(String orderNumber) {
         this.orderNumber = orderNumber;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public BigDecimal getAmount() {
@@ -62,19 +53,18 @@ public class OrderResponse {
         this.status = status;
     }
 
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }

@@ -49,6 +49,7 @@ public class OrderService {
         order.setCustomer(customer);
         order.setOrderNumber(request.getOrderNumber());
         order.setAmount(request.getAmount());
+        order.setProductName(request.getProductName());
         try {
             order.setStatus(
                     OrderStatus.valueOf(request.getStatus())
@@ -75,52 +76,32 @@ public class OrderService {
     }
     public List<OrderResponse> getAllOrders() {
 
-        return orderRepository.getAllOrders()
-                .stream()
-                .map(OrderMapper::toResponse)
-                .toList();
+        return orderRepository.getAllOrders().stream().map(OrderMapper::toResponse).toList();
     }
     public List<OrderResponse> getOrdersByCustomerId(Long customerId) {
 
-        Customer customer =
-                customerRepository.findCustomerById(customerId);
+        Customer customer = customerRepository.findCustomerById(customerId);
 
         if (customer == null) {
             throw new CustomerNotFoundException("Customer not found");
         }
 
-        return orderRepository.findByCustomerId(customerId)
-                .stream()
-                .map(OrderMapper::toResponse)
-                .toList();
+        return orderRepository.findByCustomerId(customerId).stream().map(OrderMapper::toResponse).toList();
     }
     @Transactional
-    public OrderResponse updateOrderStatus(
-            Long id,
-            UpdateOrderStatusRequest request) {
-
+    public OrderResponse updateOrderStatus(Long id, UpdateOrderStatusRequest request) {
         Order order = orderRepository.findOrderById(id);
 
         if (order == null) {
             throw new OrderNotFoundException("Order not found");
         }
-
-        order.setStatus(
-                OrderStatus.valueOf(request.getStatus())
-        );
-
+        order.setStatus(OrderStatus.valueOf(request.getStatus()));
         order.setUpdatedAt(LocalDateTime.now());
 
         return OrderMapper.toResponse(order);
     }
-    public List<OrderResponse> getAllOrders(
-            int page,
-            int size) {
+    public List<OrderResponse> getAllOrders(int page, int size) {
 
-        return orderRepository
-                .getAllOrders(page, size)
-                .stream()
-                .map(OrderMapper::toResponse)
-                .toList();
+        return orderRepository.getAllOrders(page, size).stream().map(OrderMapper::toResponse).toList();
     }
 }

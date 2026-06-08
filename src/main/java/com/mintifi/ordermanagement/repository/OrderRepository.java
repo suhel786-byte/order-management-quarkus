@@ -23,9 +23,6 @@ public class OrderRepository implements PanacheRepository<Order> {
         return find("customer.id", customerId).list();
     }
     public List<Order> getAllOrders(int page, int size) {
-
-        return findAll()
-                .page(Page.of(page, size))
-                .list();
+        return findAll().page(Page.of(page, size)).list();
     }
 }

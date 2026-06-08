@@ -6,6 +6,7 @@ import com.mintifi.ordermanagement.service.CustomerService;
 import com.mintifi.ordermanagement.dto.request.UpdateCustomerRequest;
 import com.mintifi.ordermanagement.service.OrderService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -21,63 +22,47 @@ import jakarta.ws.rs.PathParam;
 import java.util.List;
 
 @Path("/api/v1/customers")
+@RolesAllowed("ADMIN")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 
 public class CustomerController {
-
     @Inject
     CustomerService customerService;
 
 
     @POST
-    @Operation(
-            summary = "Create Customer",
-            description = "Creates a new customer"
+    @Operation(summary = "Create Customer", description = "Creates a new customer"
     )
     public Response createCustomer(@Valid CreateCustomerRequest request) {
+        CustomerResponse response = customerService.createCustomer(request);
 
-        CustomerResponse response =
-                customerService.createCustomer(request);
-
-        return Response.status(Response.Status.CREATED)
-                .entity(response)
-                .build();
+        return Response.status(Response.Status.CREATED).entity(response).build();
     }
 
     @GET
     @Path("/{id}")
     public Response getCustomerById(@PathParam("id") Long id) {
 
-        CustomerResponse response =
-                customerService.getCustomerById(id);
-
+        CustomerResponse response = customerService.getCustomerById(id);
         return Response.ok(response).build();
     }
     @GET
     public Response getAllCustomers() {
-
-        List<CustomerResponse> customers =
-                customerService.getAllCustomers();
-
+        List<CustomerResponse> customers = customerService.getAllCustomers();
         return Response.ok(customers).build();
     }
     @PUT
     @Path("/{id}")
-    public Response updateCustomer(@PathParam("id") Long id,
-                                   @Valid UpdateCustomerRequest request) {
+    public Response updateCustomer(@PathParam("id") Long id, @Valid UpdateCustomerRequest request) {
 
-        CustomerResponse response =
-                customerService.updateCustomer(id, request);
-
+        CustomerResponse response = customerService.updateCustomer(id, request);
         return Response.ok(response).build();
     }
     @DELETE
     @Path("/{id}")
     public Response deleteCustomer(@PathParam("id") Long id) {
-
         customerService.deleteCustomer(id);
-
         return Response.noContent().build();
     }
     @Inject
@@ -87,8 +72,6 @@ public class CustomerController {
     public Response getOrdersByCustomerId(
             @PathParam("customerId") Long customerId) {
 
-        return Response.ok(
-                orderService.getOrdersByCustomerId(customerId)
-        ).build();
+        return Response.ok(orderService.getOrdersByCustomerId(customerId)).build();
     }
 }

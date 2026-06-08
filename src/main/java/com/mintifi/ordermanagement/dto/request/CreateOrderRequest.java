@@ -19,6 +19,17 @@ public class CreateOrderRequest {
     @NotBlank(message = "Status is required")
     private String status;
 
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    @NotBlank
+    private String productName;
+
     public Long getCustomerId() {
         return customerId;
     }

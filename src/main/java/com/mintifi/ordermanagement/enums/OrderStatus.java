@@ -2,7 +2,9 @@ package com.mintifi.ordermanagement.enums;
 
 public enum OrderStatus {
     CREATED,
+    PENDING,
     PROCESSING,
-    COMPLETED,
+    SHIPPED,
+    DELIVERED,
     CANCELLED
 }

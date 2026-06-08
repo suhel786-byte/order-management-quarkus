@@ -16,6 +16,7 @@ public class OrderMapper {
         response.setStatus(order.getStatus().name());
         response.setCreatedAt(order.getCreatedAt());
         response.setUpdatedAt(order.getUpdatedAt());
+        response.setProductName(order.getProductName());
 
         return response;
     }
