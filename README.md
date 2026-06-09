@@ -1,81 +1,239 @@
-# order-management
+# 🚀 Order Management System
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+A production-ready **Order Management System** built using **Quarkus**, **PostgreSQL**, and **JWT Authentication**. This application provides secure REST APIs for managing customers and orders while following clean architecture and enterprise development practices.
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+---
 
-## Running the application in dev mode
+## 📌 Features
 
-You can run your application in dev mode that enables live coding using:
+* JWT Authentication & Authorization
+* Customer Management
+* Order Management
+* RESTful APIs
+* PostgreSQL Integration
+* Hibernate ORM with Panache
+* Input Validation
+* Global Exception Handling
+* Docker Support
+* Clean Layered Architecture
 
-```shell script
+---
+
+## 🛠️ Tech Stack
+
+| Technology    | Purpose                |
+| ------------- | ---------------------- |
+| Java 21       | Programming Language   |
+| Quarkus       | Backend Framework      |
+| PostgreSQL    | Database               |
+| Hibernate ORM | Persistence Layer      |
+| Panache       | Simplified Data Access |
+| JWT           | Authentication         |
+| Maven         | Build Tool             |
+| Docker        | Containerization       |
+| Git & GitHub  | Version Control        |
+
+---
+
+## 📂 Project Structure
+
+```text
+src/
+├── main/
+│   ├── java/
+│   │   └── com.mintifi.ordermanagement/
+│   │       ├── controller/
+│   │       ├── service/
+│   │       ├── repository/
+│   │       ├── entity/
+│   │       ├── dto/
+│   │       ├── security/
+│   │       └── exception/
+│   └── resources/
+│       └── application.properties
+└── test/
+```
+
+---
+
+## ⚙️ Prerequisites
+
+Before running the project, install:
+
+* Java 21+
+* Maven 3.9+
+* PostgreSQL
+* Docker (Optional)
+
+---
+
+## 🗄️ Database Configuration
+
+Configure PostgreSQL settings in:
+
+```properties
+src/main/resources/application.properties
+```
+
+Example:
+
+```properties
+quarkus.datasource.db-kind=postgresql
+quarkus.datasource.username=postgres
+quarkus.datasource.password=password
+quarkus.datasource.jdbc.url=jdbc:postgresql://localhost:5432/order_management
+
+quarkus.hibernate-orm.database.generation=update
+```
+
+---
+
+## ▶️ Running the Application
+
+### Run in Development Mode
+
+```bash
 ./mvnw quarkus:dev
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+### Build the Application
 
-## Packaging and running the application
-
-The application can be packaged using:
-
-```shell script
-./mvnw package
+```bash
+./mvnw clean package
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+### Run the Packaged Application
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
+```bash
+java -jar target/quarkus-app/quarkus-run.jar
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+---
 
-## Creating a native executable
+## 🔐 Authentication
 
-You can create a native executable using:
+The application uses JWT-based authentication.
 
-```shell script
-./mvnw package -Dnative
+### Login Endpoint
+
+```http
+POST /auth/login
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+Sample Request:
 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
+```json
+{
+  "username": "admin",
+  "password": "password"
+}
 ```
 
-You can then execute your native executable with: `./target/order-management-1.0.0-SNAPSHOT-runner`
+Sample Response:
 
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+```json
+{
+  "token": "jwt-token"
+}
+```
 
-## Related Guides
+Use the token in API requests:
 
-- Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplified JPA/Hibernate data access layer with active record and repository patterns
-- Hibernate Validator ([guide](https://quarkus.io/guides/validation)): Bean validation using Hibernate Validator and Jakarta Validation annotations
-- Flyway ([guide](https://quarkus.io/guides/flyway)): Handle your database schema migrations
-- SmallRye OpenAPI ([guide](https://quarkus.io/guides/openapi-swaggerui)): Generate OpenAPI schemas and serve Swagger UI for REST API documentation
-- JDBC Driver - PostgreSQL ([guide](https://quarkus.io/guides/datasource)): Connect to the PostgreSQL database via JDBC
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
+```http
+Authorization: Bearer <jwt-token>
+```
 
-## Provided Code
+---
 
-### Hibernate ORM
+## 📡 API Endpoints
 
-Create your first JPA entity
+### Customer APIs
 
-[Related guide section...](https://quarkus.io/guides/hibernate-orm)
+| Method | Endpoint        |
+| ------ | --------------- |
+| POST   | /customers      |
+| GET    | /customers      |
+| GET    | /customers/{id} |
+| PUT    | /customers/{id} |
+| DELETE | /customers/{id} |
 
+### Order APIs
 
-[Related Hibernate with Panache section...](https://quarkus.io/guides/hibernate-orm-panache)
+| Method | Endpoint     |
+| ------ | ------------ |
+| POST   | /orders      |
+| GET    | /orders      |
+| GET    | /orders/{id} |
+| PUT    | /orders/{id} |
+| DELETE | /orders/{id} |
 
+---
 
-### REST
+## 🐳 Docker
 
-Easily start your REST Web Services
+### Build Image
 
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+```bash
+docker build -t order-management .
+```
+
+### Run Container
+
+```bash
+docker run -p 8080:8080 order-management
+```
+
+---
+
+## 🧪 Testing APIs
+
+Using cURL:
+
+```bash
+curl http://localhost:8080/customers
+```
+
+You can also test APIs with:
+
+* Postman
+* Bruno
+* Insomnia
+
+---
+
+## 🎯 Learning Outcomes
+
+This project demonstrates:
+
+* Building REST APIs using Quarkus
+* JWT Authentication and Authorization
+* PostgreSQL Integration
+* Hibernate ORM with Panache
+* Docker Containerization
+* Clean Architecture Principles
+* Enterprise Backend Development
+
+---
+
+## 🚀 Future Enhancements
+
+* Role-Based Access Control (RBAC)
+* Swagger / OpenAPI Documentation
+* Email Notifications
+* Audit Logging
+* Caching
+* CI/CD Pipeline
+* Kubernetes Deployment
+
+---
+
+## 👨‍💻 Author
+
+**Suhel Baig**
+
+GitHub: https://github.com/suhel786-byte
+
+---
+
+⭐ If you found this project useful, consider giving it a star on GitHub.
+
